@@ -1,0 +1,24 @@
+{
+  "name": "day-flow-x",
+  "version": "1.0.0",
+  "description": "DAY-FLOW-X Full-Stack Productivity Platform",
+  "scripts": {
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "install:backend": "npm install --prefix backend",
+    "install:frontend": "npm install --prefix frontend",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "build": "npm run build --prefix frontend",
+    "db:push": "npm run db:push --prefix backend"
+  },
+  "keywords": [
+    "productivity",
+    "react",
+    "express",
+    "sqlite",
+    "prisma",
+    "pomodoro"
+  ],
+  "author": "thamil06",
+  "license": "MIT"
+}
