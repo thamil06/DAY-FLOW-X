@@ -25,7 +25,6 @@ build/
 # IDE / System files
 .DS_Store
 .idea/
-.vscode/
 *.suo
 *.ntvs*
 *.njsproj
