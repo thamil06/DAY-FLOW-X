@@ -15,4 +15,4 @@
 - [x] Integration
 - [x] Testing
 - [x] Documentation
-- [/] GitHub deployment
+- [x] GitHub deployment (Committed locally; run git push to push to remote)
