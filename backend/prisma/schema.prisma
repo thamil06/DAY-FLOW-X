@@ -1,0 +1,73 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id               String            @id @default(uuid())
+  email            String            @unique
+  password         String
+  name             String
+  createdAt        DateTime          @default(now())
+  tasks            Task[]
+  goals            Goal[]
+  productivityLogs ProductivityLog[]
+  notifications    Notification[]
+}
+
+model Task {
+  id              String    @id @default(uuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title           String
+  description     String?
+  status          String    @default("TODO") // TODO, IN_PROGRESS, COMPLETED
+  priority        String    @default("MEDIUM") // LOW, MEDIUM, HIGH
+  category        String    @default("GENERAL") // WORK, STUDY, PERSONAL, HEALTH, OTHER
+  dueDate         DateTime?
+  scheduledTime   String?   // e.g., "09:00" or "14:30"
+  durationMinutes Int       @default(30)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Goal {
+  id              String    @id @default(uuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title           String
+  description     String?
+  target          Int       @default(100)
+  currentProgress Int       @default(0)
+  deadline        DateTime?
+  status          String    @default("IN_PROGRESS") // IN_PROGRESS, COMPLETED, ABANDONED
+  createdAt       DateTime  @default(now())
+}
+
+model ProductivityLog {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date            String   // format: YYYY-MM-DD
+  focusMinutes    Int      @default(0)
+  completedTasks  Int      @default(0)
+  productivityScore Int    @default(0)
+  createdAt       DateTime @default(now())
+
+  @@unique([userId, date])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String
+  type      String   @default("INFO") // INFO, TASK_REMINDER, OVERDUE, ACHIEVEMENT
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
